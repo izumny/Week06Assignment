@@ -1,21 +1,21 @@
-class Player {              //class player (hand, score, name)
+class Player {              //class player (name, hand, points)
     constructor(name) {
       this.name = name;     //gets assigned when we create the object
       this.hand = [];       //default value of empty array assigned now
       this.points = 0;      //default value of 0 assigned now
     }
   
-    draw(card) {
-      this.hand.push(card);
+    draw(card) {            //with push method, add card in a hand when player draw card from hand.
+      return this.hand.push(card);
     }
   
-    play() {
-      return this.hand.pop();
+    play(card) {            //with pop method, substract card from players hand
+      return this.hand.pop(card);
     }
 }
   
 class Card {                //class for card (suit, rank, faceValue)
-    constructor(suit, rank, faceValue) {    //will use this class to create 52 card objects (all properties get assigned when we create the objects)
+    constructor(suit, rank, faceValue) {    //will use this class to create 52 card objects
       this.suit = suit;
       this.rank = rank;
       this.faceValue = faceValue;
@@ -41,7 +41,7 @@ class Deck {                //class for deck (create deck, shuffle, deal)
       }
     }
   
-    shuffleCards() {        //shuffle cards method - math.floor method
+    shuffleCards() {        //Fisher-Yates algorithm shuffle method: looping thru the array and picking a random item from the array 
       for (let i = this.cards.length - 1; i > 0; i--) {
         let x = Math.floor(Math.random() * (i + 1));
         [this.cards[i], this.cards[x]] = [this.cards[x], this.cards[i]];
@@ -71,7 +71,7 @@ class Game {                    //class for game logic (card comparisons)
       let card1 = this.player1.play();
       let card2 = this.player2.play();
   
-      let rankDifference = card1.rank - card2.rank;
+      let rankDifference = card1.rank - card2.rank;       //made variables of rank difference
   
       if (rankDifference > 0) {
         this.player1.points++;
@@ -87,10 +87,10 @@ class Game {                    //class for game logic (card comparisons)
         this.compareCards();
       }
   
-      console.log(`${this.player1.name}'s Score: ${this.player1.points}`);
+      console.log(`${this.player1.name}'s Score: ${this.player1.points}`);      //showing their score
       console.log(`${this.player2.name}'s Score: ${this.player2.points}`);
   
-      if (this.player1.points > this.player2.points) {
+      if (this.player1.points > this.player2.points) {            // if else statement, show the result
         console.log(`${this.player1.name} Wins!`);
       } else if (this.player1.points < this.player2.points) {
         console.log(`${this.player2.name} Wins!`);
